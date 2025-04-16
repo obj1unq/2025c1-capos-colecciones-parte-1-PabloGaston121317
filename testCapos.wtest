@@ -1,1 +1,63 @@
-r
+ import capos.*
+     describe "cuento magico" {
+
+    test "rolando encuentra una espada y la agrega en su inventario"{
+
+        rolando.encuentra(espada)
+
+        assert.equals(#{espada}, rolando.artefactos())
+    }
+
+    test "rolando tiene 2 artefactos encuentra un collar quiere agarrarlo pero no puede ya que su capacidad es de 2"{
+        rolando.encuentra(espada)
+        rolando.encuentra(libro)
+        rolando.encuentra(collar)
+
+        assert.equals(#{espada,libro}, rolando.artefactos())
+    }
+
+    test "rolando cuentra espada, libro. va a su vivienda y deja los artifactos, luego encuentra un collar lo toma y vuelve a dejarlo en su vivienda"{
+
+        rolando.encuentra(espada)
+        rolando.encuentra(libro)
+        rolando.irAVivienda()
+
+        assert.equals(#{espada,libro}, castillo.baul())
+
+        rolando.encuentra(collar)
+        rolando.irAVivienda()
+
+        assert.equals(#{espada,libro,collar}, castillo.baul())
+    }
+
+    test "rolando tiene en su vivienda una espada y un collar, en su bolso tiene un armadura. sus items en total son la espada collar y armadura"{
+        
+        rolando.encuentra(espada)
+        rolando.encuentra(collar)
+        rolando.irAVivienda()
+        rolando.encuentra(armadura)
+
+        assert.equals(#{espada,collar,armadura}, rolando.items())
+    }
+
+    test "rolando tiene en su vivienda tiene espada y collar , el posee la armadura. pero no posee el libro "{
+
+        rolando.encuentra(espada)
+        rolando.encuentra(collar)
+        rolando.irAVivienda()
+        rolando.encuentra(armadura)
+
+        assert.notThat(rolando.posee(libro))
+    }
+
+    test "testeando el historial de los artefactos que  rolando va encontrado"{
+        rolando.encuentra(espada)
+        rolando.encuentra(libro)
+        rolando.encuentra(collar)
+        rolando.irAVivienda()
+        rolando.encuentra(armadura)
+        rolando.encuentra(collar)
+
+        assert.equals([espada,libro,collar,armadura,collar], rolando.historial())
+    }
+ }
